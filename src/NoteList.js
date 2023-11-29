@@ -2,7 +2,7 @@
 import React from 'react';
 import Note from './Note';
 
-const NoteList = ({ notes, deleteNote }) => {
+const NoteList = ({ notes, deleteNote, editNote }) => {
   return (
     <div className="note-list">
       <h2>Lista de Notas</h2>
@@ -12,7 +12,7 @@ const NoteList = ({ notes, deleteNote }) => {
         <ul>
           {notes.map(note => (
             <li key={note.id}>
-              <Note note={note} deleteNote={deleteNote} />
+              <Note note={note} deleteNote={deleteNote} editNote={editNote} />
             </li>
           ))}
         </ul>

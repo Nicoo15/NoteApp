@@ -3,12 +3,13 @@ import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import NoteList from './NoteList';
 import NoteEditor from './NoteEditor';
-import './index.css'; // Asegúrate de que la importación del estilo sea correcta
+import './index.css';
 
 const App = () => {
   const storedNotes = JSON.parse(localStorage.getItem('notes')) || [];
   const [notes, setNotes] = useState(storedNotes);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedNote, setSelectedNote] = useState(null);
 
   useEffect(() => {
     localStorage.setItem('notes', JSON.stringify(notes));
@@ -23,6 +24,23 @@ const App = () => {
     setNotes(updatedNotes);
   };
 
+  const editNote = (id) => {
+    const noteToEdit = notes.find(note => note.id === id);
+    setSelectedNote(noteToEdit);
+  };
+
+  const saveEditedNote = (editedNote) => {
+    const updatedNotes = notes.map(note =>
+      note.id === editedNote.id ? editedNote : note
+    );
+    setNotes(updatedNotes);
+    setSelectedNote(null);
+  };
+
+  const clearSelectedNote = () => {
+    setSelectedNote(null);
+  };
+
   const filteredNotes = notes.filter(
     (note) =>
       note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -33,8 +51,8 @@ const App = () => {
     <div className="app-container">
       <Header setSearchTerm={setSearchTerm} />
       <div className="app-content">
-        <NoteList notes={filteredNotes} deleteNote={deleteNote} />
-        <NoteEditor addNote={addNote} />
+        <NoteList notes={filteredNotes} deleteNote={deleteNote} editNote={editNote} />
+        <NoteEditor addNote={addNote} selectedNote={selectedNote} saveEditedNote={saveEditedNote} clearSelectedNote={clearSelectedNote} />
       </div>
     </div>
   );
