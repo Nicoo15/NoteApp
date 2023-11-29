@@ -1,10 +1,17 @@
 /* src/index.css */
 
+
 body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
+  background-image: url('fondo.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
+
+
 
 .app-container {
   max-width: 800px;
@@ -97,3 +104,4 @@ button:hover {
     margin-top: 20px;
   }
 }
+
